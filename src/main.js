@@ -1,4 +1,4 @@
-import { getState, addTask } from "./state.js";
+import { getState, addTask, toggleTask, deleteTask } from "./state.js";
 
 const $form = document.getElementById("task-form");
 const $input = document.getElementById("task-form-input");
@@ -12,6 +12,24 @@ function render() {
   tasks.forEach((task) => {
     const li = document.createElement("li");
     li.textContent = task.text;
+
+    if (task.completed) {
+      li.style.textDecoration = "line-through";
+    }
+
+    // toggle on click
+    li.addEventListener("click", () => {
+      toggleTask(task.id);
+    });
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "❌";
+    deleteBtn.addEventListener("click", (e) => {
+      e.stopPropagation(); // prevent toggle
+      deleteTask(task.id);
+    });
+
+    li.appendChild(deleteBtn);
     $list.appendChild(li);
   });
 }

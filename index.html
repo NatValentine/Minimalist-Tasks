@@ -9,21 +9,24 @@
     <script type="module" src="./src/main.js"></script>
   </head>
   <body>
-    <h1>My Tasks</h1>
+    <div class="app">
+      <h1>My Tasks</h1>
 
-    <form id="task-form">
-      <input type="text" id="task-form-input" placeholder="New task..." />
-      <button type="submit">Add</button>
-    </form>
+      <p id="counter"></p>
 
-    <div id="filters">
-      <!-- MOVED TO JS
+      <form id="task-form">
+        <input type="text" id="task-form-input" placeholder="New task..." />
+        <button type="submit">Add</button>
+      </form>
+
+      <div id="filters">
+        <!-- MOVED TO JS
       <button data-filter="all">All</button>
       <button data-filter="completed">Completed</button>
       <button data-filter="pending">Pending</button>
-      -->
-    </div>
+      --></div>
 
-    <ul id="task-list"></ul>
+      <ul id="task-list"></ul>
+    </div>
   </body>
 </html>

@@ -1,9 +1,87 @@
+:root {
+    color-scheme: light;
+    --black: #222222;
+    --dark-gray: #555555;
+    --gray: #999999;
+    --white: #f5f7fa;
+    --green: #00b755;
+    --yellow: #daaf38;
+    --red: #ca4754;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.app {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--white);
+    margin: 0;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    color: var(--black);
+}
+
+form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+input {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--yellow);
+}
+
 button {
     margin-left: 1em;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: var(--black);
+    color: var(--white);
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+button:hover {
+    background: var(--dark-gray);
+}
+
+#counter {
+    color: var(--dark-gray);
+    font-size: small;
 }
 
 #filters button.active {
     margin-top: 1em;
     font-weight: bold;
-    border-bottom: 2px solid black;
+    border: 3px solid var(--yellow);
+}
+
+#task-list button {
+    padding: 6px;
+    margin: 0.5em 1em;
 }

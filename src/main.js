@@ -11,6 +11,7 @@ const $form = document.getElementById("task-form");
 const $input = document.getElementById("task-form-input");
 const $list = document.getElementById("task-list");
 const $filters = document.getElementById("filters");
+const $counter = document.getElementById("counter");
 
 Object.values(FILTERS).forEach((f) => {
   const btn = document.createElement("button");
@@ -26,27 +27,12 @@ Object.values(FILTERS).forEach((f) => {
 });
 
 function render() {
-  const { tasks, filter } = getState();
-
-  document.querySelectorAll("#filters button").forEach((btn) => {
-    btn.classList.toggle("active", btn.textContent === filter);
-  });
-
   $list.innerHTML = "";
 
-  let filteredTasks = tasks;
+  const pendingCounter = getPendingTasks();
+  const tasks = getFilteredTasks();
 
-  switch (filter) {
-    case FILTERS.COMPLETED:
-      filteredTasks = tasks.filter((t) => t.completed);
-      break;
-
-    case FILTERS.PENDING:
-      filteredTasks = tasks.filter((t) => !t.completed);
-      break;
-  }
-
-  filteredTasks.forEach((task) => {
+  tasks.forEach((task) => {
     const li = document.createElement("li");
     li.textContent = task.text;
 
@@ -60,7 +46,7 @@ function render() {
     });
 
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "❌";
+    deleteBtn.textContent = "🗑️";
     deleteBtn.addEventListener("click", (e) => {
       e.stopPropagation(); // prevent toggle
       deleteTask(task.id);
@@ -84,3 +70,34 @@ $form.addEventListener("submit", (event) => {
 document.addEventListener("stateChange", render);
 
 render();
+
+function getFilteredTasks() {
+  const { tasks, filter } = getState();
+
+  document.querySelectorAll("#filters button").forEach((btn) => {
+    btn.classList.toggle("active", btn.textContent === filter);
+  });
+
+  let filteredTasks = tasks;
+
+  switch (filter) {
+    case FILTERS.COMPLETED:
+      filteredTasks = tasks.filter((t) => t.completed);
+      break;
+
+    case FILTERS.PENDING:
+      filteredTasks = tasks.filter((t) => !t.completed);
+      break;
+  }
+
+  return filteredTasks;
+}
+
+function getPendingTasks() {
+  const { tasks } = getState();
+  const count = tasks.filter((t) => !t.completed).length;
+
+  if (count === 0) $counter.textContent = "No pending tasks!";
+  if (count === 1) $counter.textContent = "1 task pending.";
+  if (count > 1) $counter.textContent = `${count} tasks pending.`;
+}

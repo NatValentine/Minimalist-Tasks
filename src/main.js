@@ -1,4 +1,4 @@
-import { getState, addTask } from "./state";
+import { getState, addTask } from "./state.js";
 
 const $form = document.getElementById("task-form");
 const $input = document.getElementById("task-form-input");

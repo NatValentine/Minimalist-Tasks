@@ -34,16 +34,24 @@ function render() {
 
   tasks.forEach((task) => {
     const li = document.createElement("li");
-    li.textContent = task.text;
 
-    if (task.completed) {
-      li.style.textDecoration = "line-through";
-    }
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = task.completed;
 
-    // toggle on click
-    li.addEventListener("click", () => {
+    checkbox.addEventListener("change", () => {
       toggleTask(task.id);
     });
+
+    const span = document.createElement("span");
+    span.textContent = task.text;
+
+    li.appendChild(checkbox);
+    li.appendChild(span);
+
+    if (task.completed) {
+      li.classList.add("completed");
+    }
 
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "🗑️";
@@ -66,10 +74,6 @@ $form.addEventListener("submit", (event) => {
   addTask(text);
   $input.value = "";
 });
-
-document.addEventListener("stateChange", render);
-
-render();
 
 function getFilteredTasks() {
   const { tasks, filter } = getState();
@@ -101,3 +105,13 @@ function getPendingTasks() {
   if (count === 1) $counter.textContent = "1 task pending.";
   if (count > 1) $counter.textContent = `${count} tasks pending.`;
 }
+
+function init() {
+  document.addEventListener("stateChange", render);
+
+  render();
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  init();
+});

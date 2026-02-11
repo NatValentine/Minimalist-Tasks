@@ -1,3 +1,9 @@
 button {
     margin-left: 1em;
 }
+
+#filters button.active {
+    margin-top: 1em;
+    font-weight: bold;
+    border-bottom: 2px solid black;
+}

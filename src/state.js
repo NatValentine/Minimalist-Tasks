@@ -1,7 +1,14 @@
 import { loadState, saveState } from "./storage.js";
 
+export const FILTERS = {
+  ALL: "all",
+  PENDING: "pending",
+  COMPLETED: "completed",
+};
+
 const state = loadState() || {
   tasks: [],
+  filter: FILTERS.ALL,
 };
 
 export function getState() {
@@ -32,6 +39,11 @@ export function toggleTask(id) {
 export function deleteTask(id) {
   state.tasks = state.tasks.filter((t) => t.id !== id);
 
+  signalChanges();
+}
+
+export function setFilter(filter) {
+  state.filter = filter;
   signalChanges();
 }
 

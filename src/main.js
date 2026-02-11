@@ -110,6 +110,8 @@ function init() {
   document.addEventListener("stateChange", render);
 
   render();
+
+  document.querySelector(".app").style.opacity = "1";
 }
 
 window.addEventListener("DOMContentLoaded", () => {

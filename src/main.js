@@ -5,6 +5,7 @@ import {
   deleteTask,
   FILTERS,
   setFilter,
+  updateTasks,
 } from "./state.js";
 
 const $form = document.getElementById("task-form");
@@ -12,6 +13,7 @@ const $input = document.getElementById("task-form-input");
 const $list = document.getElementById("task-list");
 const $filters = document.getElementById("filters");
 const $counter = document.getElementById("counter");
+const $clearBtn = document.getElementById("clear-btn");
 
 Object.values(FILTERS).forEach((f) => {
   const btn = document.createElement("button");
@@ -29,7 +31,10 @@ Object.values(FILTERS).forEach((f) => {
 function render() {
   $list.innerHTML = "";
 
-  const pendingCounter = getPendingTasks();
+  setPendingCount();
+
+  $clearBtn.classList.toggle("visible", getCompletedCount() > 0);
+
   const tasks = getFilteredTasks();
 
   tasks.forEach((task) => {
@@ -97,7 +102,7 @@ function getFilteredTasks() {
   return filteredTasks;
 }
 
-function getPendingTasks() {
+function setPendingCount() {
   const { tasks } = getState();
   const count = tasks.filter((t) => !t.completed).length;
 
@@ -106,12 +111,23 @@ function getPendingTasks() {
   if (count > 1) $counter.textContent = `${count} tasks pending.`;
 }
 
+function getCompletedCount() {
+  const { tasks } = getState();
+  return tasks.filter((t) => t.completed).length;
+}
+
+function clearCompleted() {
+  const { tasks } = getState();
+  updateTasks(tasks.filter((t) => !t.completed));
+}
+
 function init() {
   document.addEventListener("stateChange", render);
+  $clearBtn.addEventListener("click", clearCompleted);
 
   render();
 
-  document.querySelector(".app").style.opacity = "1";
+  document.getElementById("app").style.opacity = "1";
 }
 
 window.addEventListener("DOMContentLoaded", () => {

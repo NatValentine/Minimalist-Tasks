@@ -9,10 +9,13 @@
     <script type="module" src="./src/main.js"></script>
   </head>
   <body>
-    <div class="app">
+    <div id="app">
       <h1>My Tasks</h1>
 
-      <p id="counter"></p>
+      <div id="top-bar">
+        <p id="counter"></p>
+        <button id="clear-btn">Clear completed</button>
+      </div>
 
       <form id="task-form">
         <input type="text" id="task-form-input" placeholder="New task..." />

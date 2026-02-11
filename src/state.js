@@ -47,6 +47,11 @@ export function setFilter(filter) {
   signalChanges();
 }
 
+export function updateTasks(tasks) {
+  state.tasks = tasks;
+  signalChanges();
+}
+
 function signalChanges() {
   saveState(state);
   document.dispatchEvent(new Event("stateChange"));
